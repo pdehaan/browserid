@@ -10,6 +10,7 @@ BrowserID.Modules.Dialog = (function() {
       user = bid.User,
       errors = bid.Errors,
       dom = bid.DOM,
+      storage = bid.Storage,
       helpers = bid.Helpers,
       storage = bid.Storage,
       win = window,
@@ -32,6 +33,11 @@ BrowserID.Modules.Dialog = (function() {
     machine.start({
       controller: controller
     });
+  }
+
+  function redirectFlowComplete(returnTo, r) {
+    console.log('returning', returnTo);
+    window.location = returnTo;
   }
 
   function startChannel() {
@@ -67,6 +73,9 @@ BrowserID.Modules.Dialog = (function() {
       return;
     }
 
+
+
+
     try {
       channel = WinChan.onOpen(function(origin, args, cb) {
         // XXX this is called whenever the primary provisioning iframe gets
@@ -80,6 +89,16 @@ BrowserID.Modules.Dialog = (function() {
         }
       });
     } catch (e) {
+      // we have a workaround. lets try it first.
+      // we let WinChan try first always, to prevent the redirect flow
+      // happening in an environment where popups work just fine.
+      if (localStorage.rpRequest) {
+        var rpInfo = JSON.parse(localStorage.rpRequest);
+        var done = redirectFlowComplete.curry(fixupReturnTo(rpInfo.origin, rpInfo.params.returnTo));
+        self.get(rpInfo.origin, rpInfo.params, done, done);
+        return;
+      }
+
       self.renderError("error", {
         action: errors.relaySetup
       });
