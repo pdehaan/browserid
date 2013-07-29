@@ -1,0 +1,23 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+
+  <section id="error" style="display: block" class="unsupported">
+      <h2>
+        <%- gettext('We are sorry, your browser does not support the API used to sign in to this site.') %>
+      </h2>
+
+      <a href="http://getfirefox.com" target="_blank">
+        <img src="<%- cachify('/dialog/i/firefox_logo.png') %>" width="250" height="88" alt="<%- gettext('Firefox logo') %>" />
+      </a>
+
+      <p>
+        <%- format(gettext('You can still sign in with <a %(getFirefoxLink)s>Firefox</a>'), { getFirefoxLink: 'href="http://getfirefox.com" target="_blank" title="Get Firefox"' }) %>
+      </p>
+
+      <p class="lighter">
+       <%- format(gettext('and other <a %(otherBrowserLink)s>modern browsers.</a>'), { otherBrowserLink: 'href="http://whatbrowser.org" target="_blank"' }) %>
+      </p>
+
+
+  </section>

@@ -133,6 +133,7 @@ suite.addBatch({
   '/sign_in': hasProperCacheHeaders('/sign_in'),
   '/communication_iframe': hasProperCacheHeaders('/communication_iframe'),
   '/unsupported_dialog': hasProperCacheHeaders('/unsupported_dialog'),
+  '/browser_does_not_support_api': hasProperCacheHeaders('/unsupported_dialog'),
   '/cookies_disabled': hasProperCacheHeaders('/cookies_disabled'),
   '/relay': hasProperCacheHeaders('/relay'),
   '/about': hasProperCacheHeaders('/about'),

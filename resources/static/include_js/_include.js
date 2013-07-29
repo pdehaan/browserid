@@ -137,7 +137,7 @@
     //    - https://developers.google.com/chrome/mobile/docs/user-agent
     // Windows Phone
     //    - http://stackoverflow.com/questions/11381673/javascript-solution-to-detect-mobile-browser
-    var needsPopupFix = userAgent.match(/CriOS/) ||
+    var needsPopupFix = true || userAgent.match(/CriOS/) ||
                         userAgent.match(/Windows Phone/);
 
     var w;
@@ -452,6 +452,8 @@
           delete options.oncancel;
         }
       });
+
+      if (!w) doPopupFix();
     };
 
     navigator.id = {
@@ -492,6 +494,11 @@
       },
       // get an assertion
       get: function(callback, passedOptions) {
+        if (needsPopupFix) {
+          window.location = "https://login.persona.org/browser_does_not_support_api";
+          return;
+        }
+
         var opts = {};
         passedOptions = passedOptions || {};
         opts.privacyPolicy =  passedOptions.privacyPolicy || undefined;
